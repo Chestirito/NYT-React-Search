@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import DeleteBtn from "../../components/DeleteBtn";
+//import DeleteBtn from "../../components/DeleteBtn";
 import Jumbotron from "../../components/Jumbotron";
 import API from "../../utils/API";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
-import { List, ListItem } from "../../components/List";
+//import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
 
 class Books extends Component {
@@ -12,7 +12,8 @@ class Books extends Component {
     books: [],
     topic: "",
     startYear: "",
-    endYear: ""
+    endYear: "",
+    isEmpty: false
   };
 
   componentDidMount() {
@@ -51,8 +52,12 @@ class Books extends Component {
     //     .then(res => this.loadBooks())
     //     .catch(err => console.log(err));
     // }
-
-    window.location.href = `/results/${this.state.topic}/${this.state.startYear}/${this.state.endYear}`;
+    if(this.state.topic !== "" && this.state.endYear !== "" && this.state.endYear !== ""){
+      window.location.href = `/results/${this.state.topic}/${this.state.startYear}/${this.state.endYear}`;
+    }
+    else{
+      this.setState({isEmpty: true});
+    }
 
 
   };
@@ -63,7 +68,7 @@ class Books extends Component {
         <Row>
           <Col size="md-12">
             <Jumbotron>
-              <h1>Search Article</h1>
+              <h1>Search Articles</h1>
             </Jumbotron>
             <form>
               <Input
@@ -88,17 +93,16 @@ class Books extends Component {
                 // disabled={!(this.state.topic && this.state.startYear)}
                 onClick={this.handleFormSubmit}
               >
-                {/* <Link to={"/articles/" + articles._id}>
-                  <strong>
-                    Search Articles
-                  </strong>
-                </Link> */}
                 <strong>
                     Search Articles
                 </strong>
               </FormBtn>
               
             </form>
+            {this.state.isEmpty? (
+              <strong style={{color: "red"}}>Dont Leave Empty Inputs</strong>
+            ):("")}
+            
           </Col>
         </Row>
       </Container>

@@ -64,7 +64,8 @@ class Saved extends Component {
               {this.state.articles.map(article => (
                 <ListItem key={article._id}>
                     <strong>
-                      {article.title} by {article.url}
+                      {article.title} 
+                      <br/>Pub-Date: {article.date.substring(0, 10)}
                     </strong>
                   <DeleteBtn onClick={() => this.handleDeleteClick(article._id)} />
                 </ListItem>

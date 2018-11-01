@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import Jumbotron from "../../components/Jumbotron";
 import API from "../../utils/API";
-import DeleteBtn from "../../components/DeleteBtn";
+//import DeleteBtn from "../../components/DeleteBtn";
 import SaveBtn from "../../components/SaveBtn";
 import { List, ListItem } from "../../components/List";
 
@@ -25,6 +25,7 @@ class Results extends Component {
     })
       .then(res => {
         console.log(res.data.response.docs);
+        res.data.response.docs.splice(5);
         this.setState({articles : res.data.response.docs});
       })
       .catch(err => console.log(err));
@@ -65,7 +66,7 @@ class Results extends Component {
           <Col size="md-12">
             <Jumbotron>
               <h1>
-                Hellos
+                Results From Search
               </h1>
             </Jumbotron>
           </Col>
@@ -77,7 +78,7 @@ class Results extends Component {
               {this.state.articles.map(article => (
                 <ListItem key={article._id}>
                     <strong>
-                      {article.headline.main} by {article.web_url}
+                      {article.headline.main}
                     </strong>
                   <SaveBtn onClick={() => this.handleSaveClick(article._id)} />
                 </ListItem>
@@ -87,8 +88,11 @@ class Results extends Component {
           </Col>
         </Row>
         <Row>
-          <Col size="md-2">
-            <Link to="/">← Back to Authors</Link>
+          <Col size="md-12">
+            <Link to="/">← Back to Search</Link>
+            <div style={{float:"right"}}>
+              <Link to="/saved">View Saved Articles &#8594;</Link>
+            </div>
           </Col>
         </Row>
       </Container>
